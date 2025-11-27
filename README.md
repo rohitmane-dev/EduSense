@@ -42,25 +42,47 @@ EduSense is a comprehensive educational platform designed to revolutionize doubt
 ## 📁 Project Structure
 
 ```
-EduSense/
-├── client/                  # React Frontend
+TechFiesta/
+├── client/                          # React Frontend
 │   ├── src/
-│   │   ├── components/      # UI Components (Auth, AskBar, PDF Viewer)
-│   │   ├── pages/           # Application Pages
-│   │   ├── services/        # API & Socket Services
-│   │   └── store/           # Zustand State Stores
-│   └── ...
-├── server/                  # Express Backend
-│   ├── src/
-│   │   ├── ai/              # AI Logic (RAG, Prompts, Embeddings)
-│   │   ├── config/          # Configuration (DB, Firebase, Cloudinary)
-│   │   ├── controllers/     # Request Handlers
-│   │   ├── models/          # Mongoose Schemas (User, Doubt, Frame)
-│   │   ├── routes/          # API Routes
-│   │   ├── services/        # Business Logic (Auth, Media, OCR)
-│   │   └── workers/         # Background Job Processors
-│   └── ...
-└── ...
+│   │   ├── components/
+│   │   │   ├── LoginModal.jsx       # Email/Google login modal
+│   │   │   ├── SignupModal.jsx      # Email/Google signup modal
+│   │   │   ├── SetPasswordModal.jsx # Password setup for Google users
+│   │   │   └── ProtectedRoute.jsx   # Route protection component
+│   │   ├── pages/
+│   │   │   ├── LandingPage.jsx      # Public landing page
+│   │   │   └── Dashboard.jsx        # Protected dashboard
+│   │   ├── store/
+│   │   │   ├── useAuthStore.js      # Auth state management
+│   │   │   └── useAuthModalStore.js # Modal state management
+│   │   ├── config/
+│   │   │   ├── firebase.js          # Firebase client config
+│   │   │   └── api.js               # Axios instance
+│   │   ├── App.jsx                  # Main app component
+│   │   └── index.css                # Tailwind styles
+│   ├── .env.example                 # Environment template
+│   └── package.json
+│
+└── server/                          # Node Backend
+    ├── src/
+    │   ├── config/
+    │   │   ├── firebase.js          # Firebase Admin SDK
+    │   │   └── database.js          # MongoDB connection
+    │   ├── models/
+    │   │   └── User.js              # User schema
+    │   ├── controllers/
+    │   │   └── authController.js    # Auth logic
+    │   ├── routes/
+    │   │   └── authRoutes.js        # Auth endpoints
+    │   ├── middleware/
+    │   │   ├── auth.js              # JWT verification
+    │   │   └── errorHandler.js      # Error handling
+    │   ├── utils/
+    │   │   └── jwt.js               # JWT utilities
+    │   └── server.js                # Express app
+    ├── .env.example                 # Environment template
+    └── package.json
 ```
 
 ## 🚀 Getting Started
