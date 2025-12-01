@@ -42,7 +42,7 @@ const SignupModal = () => {
 
             // Verify token with backend and create user
             const response = await api.post('/api/auth/verify-token', {
-                idToken,
+                token: idToken,
                 hasSetPassword: true
             });
 
@@ -72,7 +72,7 @@ const SignupModal = () => {
             const { idToken } = await signInWithGoogle();
 
             // Verify token with backend
-            const response = await api.post('/api/auth/verify-token', { idToken });
+            const response = await api.post('/api/auth/verify-token', { token: idToken });
 
             if (response.data.success) {
                 setUser(response.data.user);

@@ -26,7 +26,7 @@ const LoginModal = () => {
             const { idToken } = await loginWithEmail(email, password);
 
             // Verify token with backend
-            const response = await api.post('/api/auth/verify-token', { idToken });
+            const response = await api.post('/api/auth/verify-token', { token: idToken });
 
             if (response.data.success) {
                 setUser(response.data.user);
@@ -51,7 +51,7 @@ const LoginModal = () => {
             const { idToken } = await signInWithGoogle();
 
             // Verify token with backend
-            const response = await api.post('/api/auth/verify-token', { idToken });
+            const response = await api.post('/api/auth/verify-token', { token: idToken });
 
             if (response.data.success) {
                 setUser(response.data.user);
