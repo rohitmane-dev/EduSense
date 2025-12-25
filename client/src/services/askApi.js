@@ -13,7 +13,7 @@ import api from '../config/api';
  */
 export const askTextQuestion = async (questionText, options = {}) => {
     try {
-        const response = await api.post('/api/ask/text', {
+        const response = await api.post('/ask/text', {
             questionText,
             ...options,
         });
@@ -31,7 +31,7 @@ export const askTextQuestion = async (questionText, options = {}) => {
  */
 export const getMyDoubts = async (params = {}) => {
     try {
-        const response = await api.get('/api/ask/my', { params });
+        const response = await api.get('/ask/my', { params });
         return response.data;
     } catch (error) {
         console.error('Error fetching doubts:', error);
@@ -46,7 +46,7 @@ export const getMyDoubts = async (params = {}) => {
  */
 export const getDoubtById = async (doubtId) => {
     try {
-        const response = await api.get(`/api/ask/${doubtId}`);
+        const response = await api.get(`/ask/${doubtId}`);
         return response.data;
     } catch (error) {
         console.error('Error fetching doubt:', error);
@@ -61,7 +61,7 @@ export const getDoubtById = async (doubtId) => {
  */
 export const toggleBookmark = async (doubtId) => {
     try {
-        const response = await api.post(`/api/ask/${doubtId}/bookmark`);
+        const response = await api.post(`/ask/${doubtId}/bookmark`);
         return response.data;
     } catch (error) {
         console.error('Error toggling bookmark:', error);
@@ -78,7 +78,7 @@ export const toggleBookmark = async (doubtId) => {
  */
 export const rateDoubt = async (doubtId, rating, feedback = '') => {
     try {
-        const response = await api.post(`/api/ask/${doubtId}/rate`, {
+        const response = await api.post(`/ask/${doubtId}/rate`, {
             rating,
             feedback,
         });
@@ -95,7 +95,7 @@ export const rateDoubt = async (doubtId, rating, feedback = '') => {
  */
 export const getUserStats = async () => {
     try {
-        const response = await api.get('/api/ask/stats');
+        const response = await api.get('/ask/stats');
         return response.data;
     } catch (error) {
         console.error('Error fetching stats:', error);
@@ -111,7 +111,7 @@ export const getUserStats = async () => {
  */
 export const generateStudyMaterial = async (topic, type) => {
     try {
-        const response = await api.post('/api/ask/study', { topic, type });
+        const response = await api.post('/ask/study', { topic, type });
         return response.data;
     } catch (error) {
         console.error('Error generating study material:', error);
@@ -126,7 +126,7 @@ export const generateStudyMaterial = async (topic, type) => {
  */
 export const deleteDoubt = async (doubtId) => {
     try {
-        const response = await api.delete(`/api/ask/${doubtId}`);
+        const response = await api.delete(`/ask/${doubtId}`);
         return response.data;
     } catch (error) {
         console.error('Error deleting doubt:', error);
@@ -141,7 +141,7 @@ export const deleteDoubt = async (doubtId) => {
  */
 export const generateDiagram = async (doubtId, type) => {
     try {
-        const response = await api.post(`/api/ask/${doubtId}/diagram`, { type });
+        const response = await api.post(`/ask/${doubtId}/diagram`, { type });
         return response.data;
     } catch (error) {
         console.error('Error generating diagram:', error);

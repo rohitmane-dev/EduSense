@@ -95,7 +95,9 @@ const AskBar = ({ onAnswerReceived, onFileSelect, contextText }) => {
                 console.log('📝 Asking with SELECTED text only:', fullQuestion);
             }
 
-            const response = await askTextQuestion(fullQuestion);
+            const response = await askTextQuestion(fullQuestion, {
+                userId: user?._id || user?.id
+            });
 
             if (response.success) {
                 // Add doubt to store

@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import axios from 'axios';
 import LandingPage from './pages/LandingPage';
 import Dashboard from './pages/Dashboard';
 import AskDoubt from './pages/AskDoubt';
@@ -28,7 +29,10 @@ function App() {
     fetchUser();
     const warmUpBackend = async () => {
       try {
-        await api.get('/health');
+        // Use a direct axios call or fetch to bypass the configured 'api' instance which appends /api
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+        const rootUrl = API_URL.replace('/api', '');
+        await axios.get(`${rootUrl}/health`);
       } catch (error) {
         console.log('Backend warming up...');
       }

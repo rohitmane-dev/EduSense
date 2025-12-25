@@ -6,9 +6,11 @@ class SocketService {
     connect() {
         if (this.socket) return;
 
-        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-        
-        this.socket = io(API_URL, {
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+        // Socket.io needs the root URL, not the API base URL
+        const SOCKET_URL = API_URL.replace('/api', '');
+
+        this.socket = io(SOCKET_URL, {
             withCredentials: true,
             transports: ['websocket', 'polling']
         });
