@@ -51,15 +51,15 @@ const MobileMenu = ({ isOpen, onClose }) => {
                         animate={{ x: 0 }}
                         exit={{ x: '-100%' }}
                         transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                        className="fixed left-0 top-0 bottom-0 w-80 bg-dark-panel z-50 md:hidden overflow-y-auto"
+                        className="fixed left-0 top-0 bottom-0 w-80 bg-light-panel dark:bg-dark-panel z-50 md:hidden overflow-y-auto theme-transition"
                     >
                         <div className="p-6">
                             {/* Header */}
                             <div className="mb-8">
-                                <h2 className="text-2xl font-bold text-white">
-                                    <img src={img} alt="" className=" h-10" />
+                                <h2 className="text-2xl font-bold text-light-text dark:text-white theme-transition">
+                                    <img src={img} alt="EduSense Logo" className="h-10" />
                                 </h2>
-                                <p className="text-gray-400 text-sm mt-1">AI-Powered Learning</p>
+                                <p className="text-light-text-secondary dark:text-gray-400 text-sm mt-1 theme-transition">AI-Powered Learning</p>
                             </div>
 
                             {/* Menu Items */}
@@ -71,7 +71,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: index * 0.1 }}
                                         onClick={() => handleNavigation(item.path)}
-                                        className="w-full flex items-center gap-4 px-4 py-3 text-white hover:bg-dark-card hover:text-accent-teal rounded-lg transition-all group"
+                                        className="w-full flex items-center gap-4 px-4 py-3 text-light-text dark:text-white hover:bg-light-card dark:hover:bg-dark-card hover:text-accent-teal rounded-lg transition-all group theme-transition"
                                     >
                                         <span className="text-xl group-hover:scale-110 transition-transform">
                                             {item.icon}
@@ -86,7 +86,7 @@ const MobileMenu = ({ isOpen, onClose }) => {
                                     animate={{ opacity: 1, x: 0 }}
                                     transition={{ delay: menuItems.length * 0.1 }}
                                     onClick={handleLogout}
-                                    className="w-full flex items-center gap-4 px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-lg transition-all group mt-4"
+                                    className="w-full flex items-center gap-4 px-4 py-3 text-red-400 hover:bg-red-500/10 rounded-lg transition-all group mt-4 theme-transition"
                                 >
                                     <span className="text-xl group-hover:scale-110 transition-transform">
                                         <FaSignOutAlt />

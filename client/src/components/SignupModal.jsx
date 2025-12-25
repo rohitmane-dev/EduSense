@@ -185,7 +185,7 @@ const SignupModal = () => {
                                         onChange={(e) => setName(e.target.value)}
                                         required
                                         placeholder="John Doe"
-                                        className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-xl focus:border-black focus:outline-none transition-colors"
+                                        className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-xl focus:border-black focus:outline-none transition-colors text-gray-900 bg-white"
                                     />
                                 </div>
                             </div>
@@ -203,7 +203,7 @@ const SignupModal = () => {
                                         onChange={(e) => setEmail(e.target.value)}
                                         required
                                         placeholder="you@example.com"
-                                        className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-xl focus:border-black focus:outline-none transition-colors"
+                                        className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-xl focus:border-black focus:outline-none transition-colors text-gray-900 bg-white"
                                     />
                                 </div>
                             </div>
@@ -221,7 +221,7 @@ const SignupModal = () => {
                                         onChange={(e) => setPassword(e.target.value)}
                                         required
                                         placeholder="••••••••"
-                                        className="w-full pl-10 pr-12 py-3 border-2 border-gray-300 rounded-xl focus:border-black focus:outline-none transition-colors"
+                                        className="w-full pl-10 pr-12 py-3 border-2 border-gray-300 rounded-xl focus:border-black focus:outline-none transition-colors text-gray-900 bg-white"
                                     />
                                     <button
                                         type="button"
@@ -246,7 +246,7 @@ const SignupModal = () => {
                                         onChange={(e) => setConfirmPassword(e.target.value)}
                                         required
                                         placeholder="••••••••"
-                                        className="w-full pl-10 pr-12 py-3 border-2 border-gray-300 rounded-xl focus:border-black focus:outline-none transition-colors"
+                                        className="w-full pl-10 pr-12 py-3 border-2 border-gray-300 rounded-xl focus:border-black focus:outline-none transition-colors text-gray-900 bg-white"
                                     />
                                     <button
                                         type="button"

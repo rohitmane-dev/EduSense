@@ -132,21 +132,21 @@ const AskBar = ({ onAnswerReceived, onFileSelect, contextText }) => {
             className="w-full"
         >
             <form onSubmit={handleSubmit} className="relative">
-                <div className="relative bg-white rounded-2xl shadow-lg border-2 border-gray-200 focus-within:border-accent-teal transition-colors">
+                <div className="relative bg-white dark:bg-dark-panel rounded-2xl shadow-lg border-2 border-gray-200 dark:border-dark-border focus-within:border-accent-teal transition-colors theme-transition">
                     <textarea
                         value={question}
                         onChange={(e) => setQuestion(e.target.value)}
                         onKeyDown={handleKeyDown}
                         placeholder="Ask your academic doubt..."
                         disabled={askingQuestion}
-                        className="w-full px-6 py-4 pr-32 bg-transparent text-gray-900 placeholder-gray-400 resize-none focus:outline-none rounded-2xl disabled:opacity-50"
+                        className="w-full px-6 py-4 pr-32 bg-transparent text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 resize-none focus:outline-none rounded-2xl disabled:opacity-50 theme-transition"
                         rows={3}
                         maxLength={maxLength}
                     />
 
                     {/* Character Counter & Context Indicator */}
                     <div className="absolute bottom-2 left-6 flex items-center gap-3">
-                        <span className="text-xs text-gray-400">
+                        <span className="text-xs text-gray-400 dark:text-gray-500 theme-transition">
                             {remainingChars} characters remaining
                         </span>
                         {contextText && contextText.trim() && (
@@ -175,7 +175,7 @@ const AskBar = ({ onAnswerReceived, onFileSelect, contextText }) => {
                             type="button"
                             onClick={handleImageClick}
                             disabled={askingQuestion}
-                            className="p-3 text-gray-500 hover:text-accent-teal hover:bg-gray-100 rounded-full transition-colors"
+                            className="p-3 text-gray-500 dark:text-gray-400 hover:text-accent-teal hover:bg-gray-100 dark:hover:bg-dark-card rounded-full transition-colors theme-transition"
                             title="Upload Image/PDF"
                         >
                             <FaImage size={20} />
@@ -187,10 +187,10 @@ const AskBar = ({ onAnswerReceived, onFileSelect, contextText }) => {
                             onClick={startListening}
                             disabled={askingQuestion}
                             className={`
-                                p-3 rounded-full transition-colors
+                                p-3 rounded-full transition-colors theme-transition
                                 ${isListening
-                                    ? 'text-red-500 bg-red-100 animate-pulse'
-                                    : 'text-gray-500 hover:text-accent-teal hover:bg-gray-100'
+                                    ? 'text-red-500 bg-red-100 dark:bg-red-900/30 animate-pulse'
+                                    : 'text-gray-500 dark:text-gray-400 hover:text-accent-teal hover:bg-gray-100 dark:hover:bg-dark-card'
                                 }
                             `}
                             title="Voice Input"
@@ -218,9 +218,9 @@ const AskBar = ({ onAnswerReceived, onFileSelect, contextText }) => {
                 </div>
 
                 {/* Hint Text */}
-                <p className="mt-2 text-sm text-gray-400 text-center">
-                    Press <kbd className="px-2 py-1 bg-dark-card rounded text-xs">Enter</kbd> to send •{' '}
-                    <kbd className="px-2 py-1 bg-dark-card rounded text-xs">Shift + Enter</kbd> for new line
+                <p className="mt-2 text-sm text-gray-500 dark:text-gray-400 text-center theme-transition">
+                    Press <kbd className="px-2 py-1 bg-gray-200 dark:bg-dark-card rounded text-xs theme-transition">Enter</kbd> to send •{' '}
+                    <kbd className="px-2 py-1 bg-gray-200 dark:bg-dark-card rounded text-xs theme-transition">Shift + Enter</kbd> for new line
                 </p>
             </form>
 

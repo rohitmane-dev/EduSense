@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaTimes, FaLock, FaEye, FaEyeSlash, FaCheckCircle } from 'react-icons/fa';
 import useAuthModalStore from '../store/useAuthModalStore';
 import useAuthStore from '../store/useAuthStore';
-import { setPasswordForGoogleUser } from '../config/firebase';
 import api from '../config/api';
 
 const SetPasswordModal = () => {

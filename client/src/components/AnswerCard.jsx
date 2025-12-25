@@ -7,6 +7,7 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import mermaid from 'mermaid';
 import html2canvas from 'html2canvas';
 import { toggleBookmark, rateDoubt, generateStudyMaterial, deleteDoubt, generateDiagram } from '../services/askApi';
+import TypewriterText from './TypewriterText';
 
 // Initialize Mermaid with error suppression
 mermaid.initialize({
@@ -158,6 +159,7 @@ const AnswerCard = ({ doubt }) => {
     const [isGeneratingDiagram, setIsGeneratingDiagram] = useState(false);
     const [currentMermaidCode, setCurrentMermaidCode] = useState(doubt?.mermaidCode || '');
     const [isSpeaking, setIsSpeaking] = useState(false);
+    const [isNewAnswer, setIsNewAnswer] = useState(true); // Track if this is a fresh answer
     const speechRef = useRef(null);
     const { updateDoubt, removeDoubt } = useDoubtStore();
 
@@ -165,6 +167,19 @@ const AnswerCard = ({ doubt }) => {
     useEffect(() => {
         setCurrentMermaidCode(doubt?.mermaidCode || '');
     }, [doubt?.mermaidCode]);
+
+    // Track when doubt changes OR tab changes to enable typewriter effect
+    useEffect(() => {
+        setIsNewAnswer(true);
+        const totalLength = (doubt?.explanation?.length || 0) +
+            (doubt?.steps?.join('').length || 0) +
+            (doubt?.finalAnswer?.length || 0);
+        const timer = setTimeout(() => {
+            setIsNewAnswer(false);
+        }, totalLength * 20 + 3000);
+
+        return () => clearTimeout(timer);
+    }, [doubt?._id, doubt?.doubtId, activeTab]);
 
     // Cleanup speech on unmount
     useEffect(() => {
@@ -282,7 +297,7 @@ const AnswerCard = ({ doubt }) => {
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden"
+            className="bg-white dark:bg-dark-panel rounded-2xl shadow-xl border border-gray-200 dark:border-dark-border overflow-hidden theme-transition"
         >
             {/* Header */}
             <div className="bg-gradient-to-r from-accent-teal to-accent-teal/80 p-6">
@@ -325,17 +340,17 @@ const AnswerCard = ({ doubt }) => {
             </div>
 
             {/* Tab Navigation */}
-            <div className="border-b border-gray-200 bg-gray-50">
+            <div className="border-b border-gray-200 dark:border-dark-border bg-gray-50 dark:bg-dark-card theme-transition">
                 <div className="flex">
                     <button
-                        className={`px-4 py-2 flex items-center gap-2 ${activeTab === 'answer' ? 'border-b-2 border-accent-teal text-accent-teal' : 'text-gray-600'}`}
+                        className={`px-4 py-2 flex items-center gap-2 theme-transition ${activeTab === 'answer' ? 'border-b-2 border-accent-teal text-accent-teal' : 'text-gray-600 dark:text-gray-400'}`}
                         onClick={() => setActiveTab('answer')}
                     >
                         <FaLightbulb /> Answer
                     </button>
                     {doubt.code && doubt.code.snippet && doubt.code.snippet.trim() && (
                         <button
-                            className={`px-4 py-2 flex items-center gap-2 ${activeTab === 'code' ? 'border-b-2 border-accent-teal text-accent-teal' : 'text-gray-600'}`}
+                            className={`px-4 py-2 flex items-center gap-2 theme-transition ${activeTab === 'code' ? 'border-b-2 border-accent-teal text-accent-teal' : 'text-gray-600 dark:text-gray-400'}`}
                             onClick={() => setActiveTab('code')}
                         >
                             <FaCode /> Code
@@ -343,7 +358,7 @@ const AnswerCard = ({ doubt }) => {
                     )}
                     {doubt.reactions && (
                         <button
-                            className={`px-4 py-2 flex items-center gap-2 ${activeTab === 'reactions' ? 'border-b-2 border-accent-teal text-accent-teal' : 'text-gray-600'}`}
+                            className={`px-4 py-2 flex items-center gap-2 theme-transition ${activeTab === 'reactions' ? 'border-b-2 border-accent-teal text-accent-teal' : 'text-gray-600 dark:text-gray-400'}`}
                             onClick={() => setActiveTab('reactions')}
                         >
                             <FaFlask /> Reactions
@@ -351,7 +366,7 @@ const AnswerCard = ({ doubt }) => {
                     )}
                     {doubt.mermaidCode && (
                         <button
-                            className={`px-4 py-2 flex items-center gap-2 ${activeTab === 'diagram' ? 'border-b-2 border-accent-teal text-accent-teal' : 'text-gray-600'}`}
+                            className={`px-4 py-2 flex items-center gap-2 theme-transition ${activeTab === 'diagram' ? 'border-b-2 border-accent-teal text-accent-teal' : 'text-gray-600 dark:text-gray-400'}`}
                             onClick={() => setActiveTab('diagram')}
                         >
                             <FaProjectDiagram /> Diagram
@@ -371,7 +386,17 @@ const AnswerCard = ({ doubt }) => {
                                     <FaLightbulb />
                                     <h4>Overview</h4>
                                 </div>
-                                <p className="text-gray-800 text-lg leading-relaxed">{doubt.explanation}</p>
+                                <p className="text-gray-800 dark:text-gray-200 text-lg leading-relaxed theme-transition">
+                                    {isNewAnswer ? (
+                                        <TypewriterText
+                                            text={doubt.explanation}
+                                            speed={20}
+                                            onComplete={() => setIsNewAnswer(false)}
+                                        />
+                                    ) : (
+                                        doubt.explanation
+                                    )}
+                                </p>
                             </div>
                         )}
 
@@ -391,11 +416,21 @@ const AnswerCard = ({ doubt }) => {
                                             transition={{ delay: idx * 0.1 }}
                                             className="flex gap-4"
                                         >
-                                            <div className="flex-shrink-0 w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center text-gray-500 font-bold text-sm">
+                                            <div className="flex-shrink-0 w-8 h-8 bg-gray-100 dark:bg-dark-card rounded-full flex items-center justify-center text-gray-500 dark:text-gray-400 font-bold text-sm theme-transition">
                                                 {idx + 1}
                                             </div>
-                                            <div className="bg-gray-50 p-4 rounded-lg border border-gray-100 flex-1 hover:border-accent-teal/30 transition-colors">
-                                                <p className="text-gray-800 leading-relaxed">{step}</p>
+                                            <div className="bg-gray-50 dark:bg-dark-card p-4 rounded-lg border border-gray-100 dark:border-dark-border flex-1 hover:border-accent-teal/30 transition-colors theme-transition">
+                                                <p className="text-gray-800 dark:text-gray-200 leading-relaxed theme-transition">
+                                                    {isNewAnswer ? (
+                                                        <TypewriterText
+                                                            text={step}
+                                                            speed={20}
+                                                            startDelay={idx * 300}
+                                                        />
+                                                    ) : (
+                                                        step
+                                                    )}
+                                                </p>
                                             </div>
                                         </motion.div>
                                     ))}
@@ -409,13 +444,23 @@ const AnswerCard = ({ doubt }) => {
                                 initial={{ opacity: 0 }}
                                 animate={{ opacity: 1 }}
                                 transition={{ delay: 0.3 }}
-                                className="bg-green-50 p-6 rounded-xl border border-green-100"
+                                className="bg-green-50 dark:bg-green-900/20 p-6 rounded-xl border border-green-100 dark:border-green-900/50 theme-transition"
                             >
-                                <div className="flex items-center gap-2 mb-2 text-green-700 font-bold">
+                                <div className="flex items-center gap-2 mb-2 text-green-700 dark:text-green-400 font-bold theme-transition">
                                     <FaCheckCircle />
                                     <h4>Final Answer</h4>
                                 </div>
-                                <p className="text-gray-900 font-medium text-lg leading-relaxed">{doubt.finalAnswer}</p>
+                                <p className="text-gray-900 dark:text-gray-100 font-medium text-lg leading-relaxed theme-transition">
+                                    {isNewAnswer ? (
+                                        <TypewriterText
+                                            text={doubt.finalAnswer}
+                                            speed={20}
+                                            startDelay={1500}
+                                        />
+                                    ) : (
+                                        doubt.finalAnswer
+                                    )}
+                                </p>
                             </motion.div>
                         )}
 
@@ -423,21 +468,51 @@ const AnswerCard = ({ doubt }) => {
                         {doubt.followUpQuestions && (
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
                                 {doubt.followUpQuestions.easy && (
-                                    <div className="p-4 bg-green-50 rounded-lg border border-green-100">
-                                        <span className="text-xs font-bold text-green-600 uppercase">Easy Follow‑up</span>
-                                        <p className="text-sm text-gray-800 mt-1">{doubt.followUpQuestions.easy}</p>
+                                    <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-100 dark:border-green-900/50 theme-transition">
+                                        <span className="text-xs font-bold text-green-600 dark:text-green-400 uppercase theme-transition">Easy Follow‑up</span>
+                                        <p className="text-sm text-gray-800 dark:text-gray-200 mt-1 theme-transition">
+                                            {isNewAnswer ? (
+                                                <TypewriterText
+                                                    text={doubt.followUpQuestions.easy}
+                                                    speed={15}
+                                                    startDelay={2000}
+                                                />
+                                            ) : (
+                                                doubt.followUpQuestions.easy
+                                            )}
+                                        </p>
                                     </div>
                                 )}
                                 {doubt.followUpQuestions.medium && (
-                                    <div className="p-4 bg-yellow-50 rounded-lg border border-yellow-100">
-                                        <span className="text-xs font-bold text-yellow-600 uppercase">Medium Follow‑up</span>
-                                        <p className="text-sm text-gray-800 mt-1">{doubt.followUpQuestions.medium}</p>
+                                    <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-lg border border-yellow-100 dark:border-yellow-900/50 theme-transition">
+                                        <span className="text-xs font-bold text-yellow-600 dark:text-yellow-400 uppercase theme-transition">Medium Follow‑up</span>
+                                        <p className="text-sm text-gray-800 dark:text-gray-200 mt-1 theme-transition">
+                                            {isNewAnswer ? (
+                                                <TypewriterText
+                                                    text={doubt.followUpQuestions.medium}
+                                                    speed={15}
+                                                    startDelay={2200}
+                                                />
+                                            ) : (
+                                                doubt.followUpQuestions.medium
+                                            )}
+                                        </p>
                                     </div>
                                 )}
                                 {doubt.followUpQuestions.challenge && (
-                                    <div className="p-4 bg-red-50 rounded-lg border border-red-100">
-                                        <span className="text-xs font-bold text-red-600 uppercase">Challenge</span>
-                                        <p className="text-sm text-gray-800 mt-1">{doubt.followUpQuestions.challenge}</p>
+                                    <div className="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-100 dark:border-red-900/50 theme-transition">
+                                        <span className="text-xs font-bold text-red-600 dark:text-red-400 uppercase theme-transition">Challenge</span>
+                                        <p className="text-sm text-gray-800 dark:text-gray-200 mt-1 theme-transition">
+                                            {isNewAnswer ? (
+                                                <TypewriterText
+                                                    text={doubt.followUpQuestions.challenge}
+                                                    speed={15}
+                                                    startDelay={2400}
+                                                />
+                                            ) : (
+                                                doubt.followUpQuestions.challenge
+                                            )}
+                                        </p>
                                     </div>
                                 )}
                             </div>

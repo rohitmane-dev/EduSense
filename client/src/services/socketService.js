@@ -1,71 +1,59 @@
-import { io } from 'socket.io-client';
-
-const SOCKET_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+import io from 'socket.io-client';
 
 class SocketService {
-    constructor() {
-        this.socket = null;
-        this.connected = false;
+    socket;
+
+    connect() {
+        if (this.socket) return;
+
+        const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+        
+        this.socket = io(API_URL, {
+            withCredentials: true,
+            transports: ['websocket', 'polling']
+        });
+
+        this.socket.on('connect', () => {
+            console.log('Connected to socket server');
+        });
+
+        this.socket.on('connect_error', (err) => {
+            console.error('Socket connection error:', err);
+        });
     }
 
-    connect(userId) {
-        if (!this.socket || !this.connected) {
-            this.socket = io(SOCKET_URL, {
-                withCredentials: true,
-                transports: ['websocket', 'polling'],
-            });
+    joinUserRoom(userId) {
+        if (!this.socket) return;
+        this.socket.emit('join_user', userId);
+    }
 
-            this.socket.on('connect', () => {
-                console.log('✅ Socket connected:', this.socket.id);
-                this.connected = true;
-                if (userId) {
-                    this.socket.emit('join', userId);
-                }
-            });
+    joinMentorRoom(userId) {
+        if (!this.socket) return;
+        this.socket.emit('join_mentor', userId);
+    }
 
-            this.socket.on('disconnect', () => {
-                console.log('❌ Socket disconnected');
-                this.connected = false;
-            });
+    on(eventName, callback) {
+        if (!this.socket) return;
+        this.socket.on(eventName, callback);
+    }
 
-            this.socket.on('connect_error', (error) => {
-                console.error('Socket connection error:', error);
-                this.connected = false;
-            });
-        }
+    off(eventName) {
+        if (!this.socket) return;
+        this.socket.off(eventName);
+    }
 
-        return this.socket;
+    emit(eventName, data) {
+        if (!this.socket) return;
+        this.socket.emit(eventName, data);
     }
 
     disconnect() {
         if (this.socket) {
             this.socket.disconnect();
             this.socket = null;
-            this.connected = false;
         }
-    }
-
-    on(event, callback) {
-        if (this.socket) {
-            this.socket.on(event, callback);
-        }
-    }
-
-    off(event, callback) {
-        if (this.socket) {
-            this.socket.off(event, callback);
-        }
-    }
-
-    emit(event, data) {
-        if (this.socket && this.connected) {
-            this.socket.emit(event, data);
-        }
-    }
-
-    isConnected() {
-        return this.connected && this.socket?.connected;
     }
 }
 
-export default new SocketService();
+const socketService = new SocketService();
+export default socketService;

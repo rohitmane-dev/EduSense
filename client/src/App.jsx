@@ -8,6 +8,10 @@ import Leaderboard from './pages/Leaderboard';
 import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import UploadPage from './pages/UploadPage';
+import MentorDashboard from './pages/MentorDashboard';
+import MentorDoubtDetail from './pages/MentorDoubtDetail';
+import AdminDashboard from './pages/AdminDashboard';
+
 import ProtectedRoute from './components/ProtectedRoute';
 import LoginModal from './components/LoginModal';
 import SignupModal from './components/SignupModal';
@@ -15,31 +19,36 @@ import SetPasswordModal from './components/SetPasswordModal';
 import MainLayout from './components/MainLayout';
 import useAuthStore from './store/useAuthStore';
 
+import api from './config/api';
+
 function App() {
   const { isAuthenticated, fetchUser } = useAuthStore();
 
   useEffect(() => {
-    // Try to fetch user on app load (only once)
     fetchUser();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Empty dependency array - only run once on mount
+    const warmUpBackend = async () => {
+      try {
+        await api.get('/health');
+      } catch (error) {
+        console.log('Backend warming up...');
+      }
+    };
+    warmUpBackend();
+  }, []);
 
   return (
     <Router>
       <div className="App">
-        {/* Auth Modals */}
         <LoginModal />
         <SignupModal />
         <SetPasswordModal />
 
-        {/* Routes */}
         <Routes>
           <Route
             path="/"
             element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LandingPage />}
           />
 
-          {/* Protected Routes with Layout */}
           <Route
             element={
               <ProtectedRoute>
@@ -54,6 +63,13 @@ function App() {
             <Route path="/upload" element={<UploadPage />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<Settings />} />
+
+            {/* Mentor Routes */}
+            <Route path="/mentor/dashboard" element={<MentorDashboard />} />
+            <Route path="/mentor/doubt/:id" element={<MentorDoubtDetail />} />
+
+            {/* Admin Routes */}
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />

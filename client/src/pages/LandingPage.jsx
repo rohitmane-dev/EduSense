@@ -1,11 +1,32 @@
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 import { FaRocket, FaBook, FaUsers, FaChartLine } from 'react-icons/fa';
 import useAuthModalStore from '../store/useAuthModalStore';
 import useAuthStore from '../store/useAuthStore';
+import api from '../config/api';
 
 const LandingPage = () => {
     const { openLogin, openSignup } = useAuthModalStore();
     const { isAuthenticated } = useAuthStore();
+
+    // Warm up the backend on page load (for Render free tier)
+    useEffect(() => {
+        const warmUpBackend = async () => {
+            try {
+                // Send a simple health check request to wake up the backend
+                await api.get('/health').catch(() => {
+                    // Silently fail if health endpoint doesn't exist
+                    // The request still wakes up the server
+                });
+                console.log('Backend warm-up request sent');
+            } catch (error) {
+                // Ignore errors - the goal is just to wake up the server
+                console.log('Backend warming up...');
+            }
+        };
+
+        warmUpBackend();
+    }, []);
 
     const features = [
         {

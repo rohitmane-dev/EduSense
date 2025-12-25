@@ -9,10 +9,11 @@ import AskBar from '../components/AskBar';
 import InteractiveImage from '../components/InteractiveImage';
 import PdfPageViewer from '../components/PdfPageViewer';
 import AnswerCard from '../components/AnswerCard';
+import Generating from '../components/loadings/Generating';
 
 const AskDoubt = () => {
     const { user, fetchUser } = useAuthStore();
-    const { addDoubt, error, setError } = useDoubtStore();
+    const { addDoubt, error, setError, askingQuestion } = useDoubtStore();
     const [currentAnswer, setCurrentAnswer] = useState(null);
 
     // Image Upload State
@@ -161,7 +162,7 @@ const AskDoubt = () => {
     return (
         <div className="container p-4 md:p-8 mx-auto max-w-5xl">
             <header className="mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2">Ask a Doubt</h1>
+                <h1 className="text-3xl text-light-text font-bold dark:text-white mb-2">Ask a Doubt</h1>
                 <p className="text-gray-400">Get instant, AI-powered explanations for your questions.</p>
             </header>
 
@@ -260,6 +261,17 @@ const AskDoubt = () => {
                 </motion.div>
             )}
 
+            {/* Show Generating animation while waiting for response */}
+            {askingQuestion && !currentAnswer && (
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="mb-8 bg-white dark:bg-dark-panel rounded-2xl shadow-xl border border-gray-200 dark:border-dark-border overflow-hidden theme-transition p-8"
+                >
+                    <Generating />
+                </motion.div>
+            )}
+
             {currentAnswer && (
                 <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
@@ -270,11 +282,11 @@ const AskDoubt = () => {
                 </motion.div>
             )}
 
-            {!currentAnswer && !showImagePreview && (
+            {!currentAnswer && !showImagePreview && !askingQuestion && (
                 <div className="text-center py-20 opacity-50">
                     <div className="text-6xl mb-4">💡</div>
-                    <h3 className="text-xl font-semibold text-white">Ready to learn?</h3>
-                    <p className="text-gray-400">Type your question above to get started.</p>
+                    <h3 className="text-xl font-semibold text-light-text dark:text-white theme-transition">Ready to learn?</h3>
+                    <p className="text-light-text-secondary dark:text-gray-400 theme-transition">Type your question above to get started.</p>
                 </div>
             )}
         </div>

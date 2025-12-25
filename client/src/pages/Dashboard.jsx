@@ -47,59 +47,59 @@ const Dashboard = () => {
             {/* Welcome Header */}
             <header className="mb-8 flex justify-between items-end">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">
+                    <h1 className="text-3xl font-bold text-light-text dark:text-white theme-transition mb-2">
                         Dashboard
                     </h1>
-                    <p className="text-gray-400">Track your learning progress and stats.</p>
+                    <p className="text-light-text-secondary dark:text-gray-400 theme-transition">Track your learning progress and stats.</p>
                 </div>
                 <div className="text-right hidden md:block">
-                    <p className="text-sm text-gray-500">Last active: {new Date().toLocaleDateString()}</p>
+                    <p className="text-sm text-light-text-secondary dark:text-gray-500 theme-transition">Last active: {new Date().toLocaleDateString()}</p>
                 </div>
             </header>
 
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div className="bg-dark-panel p-6 rounded-xl border border-dark-border shadow-sm">
+                <div className="bg-light-panel dark:bg-dark-panel p-6 rounded-xl border border-light-border dark:border-dark-border shadow-sm theme-transition">
                     <div className="flex items-center gap-4 mb-2">
                         <div className="p-3 bg-orange-500/10 text-orange-500 rounded-lg">
                             <FaFire className="text-xl" />
                         </div>
                         <div>
-                            <p className="text-gray-400 text-sm">Current Streak</p>
-                            <h3 className="text-2xl font-bold text-white">{user?.streak || 0} Days</h3>
+                            <p className="text-light-text-secondary dark:text-gray-400 text-sm">Current Streak</p>
+                            <h3 className="text-2xl font-bold text-light-text dark:text-white theme-transition">{user?.streak || 0} Days</h3>
                         </div>
                     </div>
                 </div>
-                <div className="bg-dark-panel p-6 rounded-xl border border-dark-border shadow-sm">
+                <div className="bg-light-panel dark:bg-dark-panel p-6 rounded-xl border border-light-border dark:border-dark-border shadow-sm theme-transition">
                     <div className="flex items-center gap-4 mb-2">
                         <div className="p-3 bg-yellow-500/10 text-yellow-500 rounded-lg">
                             <FaTrophy className="text-xl" />
                         </div>
                         <div>
-                            <p className="text-gray-400 text-sm">Total XP</p>
-                            <h3 className="text-2xl font-bold text-white">{user?.points || 0} XP</h3>
+                            <p className="text-light-text-secondary dark:text-gray-400 text-sm">Total XP</p>
+                            <h3 className="text-2xl font-bold text-light-text dark:text-white theme-transition">{user?.points || 0} XP</h3>
                         </div>
                     </div>
                 </div>
-                <div className="bg-dark-panel p-6 rounded-xl border border-dark-border shadow-sm">
+                <div className="bg-light-panel dark:bg-dark-panel p-6 rounded-xl border border-light-border dark:border-dark-border shadow-sm theme-transition">
                     <div className="flex items-center gap-4 mb-2">
                         <div className="p-3 bg-blue-500/10 text-blue-500 rounded-lg">
                             <FaBookOpen className="text-xl" />
                         </div>
                         <div>
-                            <p className="text-gray-400 text-sm">Questions Asked</p>
-                            <h3 className="text-2xl font-bold text-white">{totalDoubts}</h3>
+                            <p className="text-light-text-secondary dark:text-gray-400 text-sm">Questions Asked</p>
+                            <h3 className="text-2xl font-bold text-light-text dark:text-white theme-transition">{totalDoubts}</h3>
                         </div>
                     </div>
                 </div>
-                <div className="bg-dark-panel p-6 rounded-xl border border-dark-border shadow-sm">
+                <div className="bg-light-panel dark:bg-dark-panel p-6 rounded-xl border border-light-border dark:border-dark-border shadow-sm theme-transition">
                     <div className="flex items-center gap-4 mb-2">
                         <div className="p-3 bg-purple-500/10 text-purple-500 rounded-lg">
                             <FaBrain className="text-xl" />
                         </div>
                         <div>
-                            <p className="text-gray-400 text-sm">Top Subject</p>
-                            <h3 className="text-2xl font-bold text-white truncate max-w-[120px]">{topSubject}</h3>
+                            <p className="text-light-text-secondary dark:text-gray-400 text-sm">Top Subject</p>
+                            <h3 className="text-2xl font-bold text-light-text dark:text-white theme-transition truncate max-w-[120px]">{topSubject}</h3>
                         </div>
                     </div>
                 </div>
@@ -133,14 +133,14 @@ const Dashboard = () => {
                     {/* Recent Activity */}
                     <div>
                         <div className="flex items-center justify-between mb-4">
-                            <h2 className="text-xl font-bold text-white">Recent Activity</h2>
+                            <h2 className="text-xl font-bold text-light-text dark:text-white theme-transition">Recent Activity</h2>
                             <Link to="/doubts" className="text-accent-teal hover:underline text-sm">View All</Link>
                         </div>
                         {loading ? (
                             <Loader text="Loading activity..." />
                         ) : doubts.length === 0 ? (
-                            <div className="bg-dark-panel rounded-xl p-8 text-center border border-dark-border">
-                                <p className="text-gray-400">No recent activity. Start asking questions!</p>
+                            <div className="bg-light-panel dark:bg-dark-panel rounded-xl p-8 text-center border border-light-border dark:border-dark-border theme-transition">
+                                <p className="text-light-text-secondary dark:text-gray-400">No recent activity. Start asking questions!</p>
                             </div>
                         ) : (
                             <div className="space-y-4">
@@ -155,10 +155,10 @@ const Dashboard = () => {
                 {/* Sidebar Widgets */}
                 <div className="space-y-6">
                     {/* Subject Distribution (Simple List) */}
-                    <div className="bg-dark-panel rounded-xl p-6 border border-dark-border">
+                    <div className="bg-light-panel dark:bg-dark-panel rounded-xl p-6 border border-light-border dark:border-dark-border theme-transition">
                         <div className="flex items-center justify-between mb-4">
-                            <h3 className="font-bold text-white flex items-center gap-2">
-                                <FaChartPie className="text-gray-400" /> Subject Breakdown
+                            <h3 className="font-bold text-light-text dark:text-white flex items-center gap-2 theme-transition">
+                                <FaChartPie className="text-light-text-secondary dark:text-gray-400" /> Subject Breakdown
                             </h3>
                             {Object.keys(subjects).length > 5 && (
                                 <Link to="/doubts" className="text-accent-teal hover:underline text-xs">
@@ -170,10 +170,10 @@ const Dashboard = () => {
                             {Object.entries(subjects).slice(0, 5).map(([subject, count], index) => (
                                 <div key={index}>
                                     <div className="flex justify-between text-sm mb-1">
-                                        <span className="text-gray-300">{subject}</span>
-                                        <span className="text-gray-500">{count}</span>
+                                        <span className="text-light-text dark:text-gray-300">{subject}</span>
+                                        <span className="text-light-text-secondary dark:text-gray-500">{count}</span>
                                     </div>
-                                    <div className="h-2 bg-dark-bg rounded-full overflow-hidden">
+                                    <div className="h-2 bg-light-card dark:bg-dark-bg rounded-full overflow-hidden theme-transition">
                                         <div
                                             className="h-full bg-accent-teal opacity-80"
                                             style={{ width: `${(count / totalDoubts) * 100}%` }}
@@ -182,15 +182,15 @@ const Dashboard = () => {
                                 </div>
                             ))}
                             {Object.keys(subjects).length === 0 && (
-                                <p className="text-gray-500 text-sm italic">No data yet.</p>
+                                <p className="text-light-text-secondary dark:text-gray-500 text-sm italic">No data yet.</p>
                             )}
                         </div>
                     </div>
 
                     {/* Badges Widget */}
-                    <div className="bg-dark-panel rounded-xl p-6 border border-dark-border">
-                        <h3 className="font-bold text-white mb-4 flex items-center gap-2">
-                            <FaMedal className="text-gray-400" /> Recent Badges
+                    <div className="bg-light-panel dark:bg-dark-panel rounded-xl p-6 border border-light-border dark:border-dark-border theme-transition">
+                        <h3 className="font-bold text-light-text dark:text-white mb-4 flex items-center gap-2 theme-transition">
+                            <FaMedal className="text-light-text-secondary dark:text-gray-400" /> Recent Badges
                         </h3>
                         <div className="flex flex-wrap gap-2">
                             {user?.badges && user.badges.length > 0 ? (
@@ -200,7 +200,7 @@ const Dashboard = () => {
                                     </span>
                                 ))
                             ) : (
-                                <p className="text-gray-500 text-sm italic">No badges earned yet.</p>
+                                <p className="text-light-text-secondary dark:text-gray-500 text-sm italic">No badges earned yet.</p>
                             )}
                         </div>
                     </div>

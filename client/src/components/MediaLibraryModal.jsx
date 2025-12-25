@@ -67,22 +67,22 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelectFile, onUploadNew }) => {
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-            <div className="bg-dark-card w-full max-w-3xl rounded-2xl border border-gray-700 shadow-2xl overflow-hidden flex flex-col max-h-[80vh]">
+            <div className="bg-white dark:bg-dark-card w-full max-w-3xl rounded-2xl border border-gray-200 dark:border-gray-700 shadow-2xl overflow-hidden flex flex-col max-h-[80vh] theme-transition">
                 {/* Header */}
-                <div className="flex justify-between items-center p-6 border-b border-gray-700">
-                    <h2 className="text-xl font-bold text-white">Media Library</h2>
-                    <button onClick={onClose} className="text-gray-400 hover:text-white transition-colors">
+                <div className="flex justify-between items-center p-6 border-b border-gray-200 dark:border-gray-700 theme-transition">
+                    <h2 className="text-xl font-bold text-gray-900 dark:text-white theme-transition">Media Library</h2>
+                    <button onClick={onClose} className="text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors theme-transition">
                         <FaTimes size={24} />
                     </button>
                 </div>
 
                 {/* Tabs */}
-                <div className="flex border-b border-gray-700">
+                <div className="flex border-b border-gray-200 dark:border-gray-700 theme-transition">
                     <button
                         onClick={() => setActiveTab('library')}
                         className={`flex-1 py-4 text-sm font-medium transition-colors ${activeTab === 'library'
                             ? 'bg-accent-teal/10 text-accent-teal border-b-2 border-accent-teal'
-                            : 'text-gray-400 hover:text-white hover:bg-white/5'
+                            : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 theme-transition'
                             }`}
                     >
                         Your Library
@@ -91,7 +91,7 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelectFile, onUploadNew }) => {
                         onClick={() => setActiveTab('upload')}
                         className={`flex-1 py-4 text-sm font-medium transition-colors ${activeTab === 'upload'
                             ? 'bg-accent-teal/10 text-accent-teal border-b-2 border-accent-teal'
-                            : 'text-gray-400 hover:text-white hover:bg-white/5'
+                            : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 theme-transition'
                             }`}
                     >
                         Upload New
@@ -111,7 +111,7 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelectFile, onUploadNew }) => {
                                     <button
                                         key={item._id}
                                         onClick={() => onSelectFile(item)}
-                                        className="group relative aspect-square rounded-lg overflow-hidden border border-gray-700 hover:border-accent-teal transition-all"
+                                        className="group relative aspect-square rounded-lg overflow-hidden border border-gray-300 dark:border-gray-700 hover:border-accent-teal transition-all theme-transition"
                                     >
                                         <div
                                             onClick={(e) => handleDelete(e, item._id)}
@@ -130,7 +130,7 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelectFile, onUploadNew }) => {
                                             />
                                         ) : (
                                             // Fallback for files without a preview URL
-                                            <div className="w-full h-full bg-gray-800 flex flex-col items-center justify-center text-gray-400 group-hover:text-white">
+                                            <div className="w-full h-full bg-gray-100 dark:bg-gray-800 flex flex-col items-center justify-center text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white theme-transition">
                                                 {item.mimeType?.includes('pdf') || item.sourceType === 'pdf_page' ? (
                                                     <FaFilePdf size={40} className="mb-2" />
                                                 ) : (
@@ -149,18 +149,18 @@ const MediaLibraryModal = ({ isOpen, onClose, onSelectFile, onUploadNew }) => {
                                 ))}
                             </div>
                         ) : (
-                            <div className="text-center py-12 text-gray-500">
+                            <div className="text-center py-12 text-gray-500 dark:text-gray-500 theme-transition">
                                 <FaImage className="mx-auto text-4xl mb-4 opacity-50" />
                                 <p>No uploads found</p>
                             </div>
                         )
                     ) : (
-                        <div className="flex flex-col items-center justify-center h-full py-12 border-2 border-dashed border-gray-700 rounded-xl hover:border-accent-teal/50 transition-colors">
+                        <div className="flex flex-col items-center justify-center h-full py-12 border-2 border-dashed border-gray-300 dark:border-gray-700 rounded-xl hover:border-accent-teal/50 transition-colors theme-transition">
                             <div className="w-16 h-16 bg-accent-teal/10 rounded-full flex items-center justify-center mb-4 text-accent-teal">
                                 <FaCloudUploadAlt size={32} />
                             </div>
-                            <h3 className="text-lg font-medium text-white mb-2">Upload from Device</h3>
-                            <p className="text-gray-400 mb-6 text-center max-w-xs">
+                            <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2 theme-transition">Upload from Device</h3>
+                            <p className="text-gray-600 dark:text-gray-400 mb-6 text-center max-w-xs theme-transition">
                                 Support for Images (JPG, PNG) and Documents (PDF)
                             </p>
                             <button

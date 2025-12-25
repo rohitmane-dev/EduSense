@@ -42,22 +42,22 @@ const DoubtItem = ({ doubt, onClick }) => {
         <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow"
+            className="bg-white dark:bg-dark-panel rounded-xl shadow-md border border-gray-200 dark:border-dark-border overflow-hidden hover:shadow-lg transition-all theme-transition"
         >
             {/* Header - Always Visible */}
             <div className="flex items-start">
                 <button
                     onClick={handleClick}
-                    className="flex-1 p-4 text-left hover:bg-gray-50 transition-colors flex items-start justify-between gap-4"
+                    className="flex-1 p-4 text-left hover:bg-gray-50 dark:hover:bg-dark-card transition-colors flex items-start justify-between gap-4 theme-transition"
                 >
                     <div className="flex-1 min-w-0">
                         {/* Question */}
-                        <h4 className="text-base font-semibold text-gray-900 mb-2 line-clamp-2">
+                        <h4 className="text-base font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 theme-transition">
                             {doubt.questionText}
                         </h4>
 
                         {/* Meta Info */}
-                        <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500">
+                        <div className="flex flex-wrap items-center gap-3 text-xs text-gray-500 dark:text-gray-500">
                             <span className="flex items-center gap-1">
                                 <FaClock />
                                 {getTimeAgo(doubt.createdAt)}
@@ -92,7 +92,7 @@ const DoubtItem = ({ doubt, onClick }) => {
                     </div>
 
                     {/* Expand Icon */}
-                    <div className="flex-shrink-0 text-gray-400 mt-1">
+                    <div className="flex-shrink-0 text-gray-400 dark:text-gray-400 mt-1">
                         {isExpanded ? <FaChevronUp /> : <FaChevronDown />}
                     </div>
                 </button>
@@ -100,7 +100,7 @@ const DoubtItem = ({ doubt, onClick }) => {
                 {/* Delete Button */}
                 <button
                     onClick={handleDelete}
-                    className="p-4 text-gray-300 hover:text-red-500 transition-colors border-l border-gray-100"
+                    className="p-4 text-gray-300 dark:text-gray-300 hover:text-red-500 transition-colors border-l border-gray-100 dark:border-dark-border theme-transition"
                     title="Delete Doubt"
                 >
                     <FaTrash />
@@ -115,18 +115,18 @@ const DoubtItem = ({ doubt, onClick }) => {
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ duration: 0.3 }}
-                        className="border-t border-gray-200 overflow-hidden"
+                        className="border-t border-gray-200 dark:border-dark-border overflow-hidden theme-transition"
                     >
-                        <div className="p-4 space-y-4 bg-gray-50">
+                        <div className="p-4 space-y-4 bg-gray-50 dark:bg-dark-card theme-transition">
                             {/* Steps */}
                             {doubt.answerSteps && doubt.answerSteps.length > 0 && (
                                 <div>
-                                    <h5 className="text-sm font-semibold text-gray-700 mb-2">Steps:</h5>
+                                    <h5 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 theme-transition">Steps:</h5>
                                     <div className="space-y-2">
                                         {doubt.answerSteps.map((step, index) => (
                                             <div
                                                 key={index}
-                                                className="text-sm text-gray-700 pl-4 border-l-2 border-gray-300"
+                                                className="text-sm text-gray-700 dark:text-gray-400 pl-4 border-l-2 border-gray-300 dark:border-gray-600 theme-transition"
                                             >
                                                 {step}
                                             </div>
@@ -138,8 +138,8 @@ const DoubtItem = ({ doubt, onClick }) => {
                             {/* Final Answer */}
                             {doubt.finalAnswer && (
                                 <div>
-                                    <h5 className="text-sm font-semibold text-gray-700 mb-2">Answer:</h5>
-                                    <p className="text-sm text-gray-700 leading-relaxed bg-white p-3 rounded-lg border-l-4 border-accent-teal">
+                                    <h5 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2 theme-transition">Answer:</h5>
+                                    <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed bg-white dark:bg-dark-panel p-3 rounded-lg border-l-4 border-accent-teal theme-transition">
                                         {doubt.finalAnswer}
                                     </p>
                                 </div>
@@ -149,12 +149,12 @@ const DoubtItem = ({ doubt, onClick }) => {
                             {doubt.confidence && (
                                 <div>
                                     <div className="flex items-center justify-between mb-1">
-                                        <span className="text-xs font-medium text-gray-600">Confidence</span>
+                                        <span className="text-xs font-medium text-gray-600 dark:text-gray-400 theme-transition">Confidence</span>
                                         <span className="text-xs font-bold text-accent-teal">
                                             {confidencePercentage}%
                                         </span>
                                     </div>
-                                    <div className="w-full bg-gray-200 rounded-full h-1.5">
+                                    <div className="w-full bg-gray-200 dark:bg-dark-bg rounded-full h-1.5 theme-transition">
                                         <div
                                             className="h-full bg-accent-teal rounded-full transition-all"
                                             style={{ width: `${confidencePercentage}%` }}
