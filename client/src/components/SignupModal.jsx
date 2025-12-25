@@ -10,6 +10,7 @@ const SignupModal = () => {
     const { isSignupOpen, closeAll, openLogin, openSetPassword } = useAuthModalStore();
     const { setUser } = useAuthStore();
 
+    const [role, setRole] = useState('student'); // 'student' or 'mentor'
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -43,7 +44,8 @@ const SignupModal = () => {
             // Verify token with backend and create user
             const response = await api.post('/api/auth/verify-token', {
                 token: idToken,
-                hasSetPassword: true
+                hasSetPassword: true,
+                role // Pass selected role
             });
 
             if (response.data.success) {
@@ -98,6 +100,7 @@ const SignupModal = () => {
         setEmail('');
         setPassword('');
         setConfirmPassword('');
+        setRole('student');
         setError('');
     };
 
@@ -136,7 +139,31 @@ const SignupModal = () => {
                         {/* Header */}
                         <div className="text-center mb-8">
                             <h2 className="text-3xl font-bold text-gray-900 mb-2">Create Account</h2>
-                            <p className="text-gray-600">Start your learning journey today</p>
+                            <p className="text-gray-600">Join as a Student or Mentor</p>
+                        </div>
+
+                        {/* Role Selector */}
+                        <div className="grid grid-cols-2 gap-4 mb-6">
+                            <button
+                                onClick={() => setRole('student')}
+                                className={`p-4 rounded-xl border-2 transition-all duration-200 flex flex-col items-center gap-2 ${role === 'student'
+                                    ? 'border-black bg-black text-white'
+                                    : 'border-gray-200 hover:border-gray-300 text-gray-600'
+                                    }`}
+                            >
+                                <span className="font-semibold">Student</span>
+                                <span className="text-xs opacity-80">I want to learn</span>
+                            </button>
+                            <button
+                                onClick={() => setRole('mentor')}
+                                className={`p-4 rounded-xl border-2 transition-all duration-200 flex flex-col items-center gap-2 ${role === 'mentor'
+                                    ? 'border-black bg-black text-white'
+                                    : 'border-gray-200 hover:border-gray-300 text-gray-600'
+                                    }`}
+                            >
+                                <span className="font-semibold">Mentor</span>
+                                <span className="text-xs opacity-80">I want to teach</span>
+                            </button>
                         </div>
 
                         {/* Error Message */}
